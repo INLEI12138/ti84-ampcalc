@@ -58,7 +58,7 @@ Goto EN
 Lbl EN
 For(X,V,V+R-1)
 ClrHome
-Disp "AMPCALC V28"
+Disp "AMPCALC V29"
 Disp sub(Str3,9*(X-1)+1,9)
 Disp "E.G. 10K 1UF 1NH","0 IF ABSENT"
 Input "",Str1
@@ -224,15 +224,58 @@ Disp "DB=",L₂(1)
 Disp "DEG=",L₃(1)
 Stop
 End
-seq(K*(abs(L₂(K)-L₂(1))>3),K,1,N)→L₅
-min(L₅+10^9*(L₅=0))→F
-If F>N:0→F
 L₂(1)→G
 L₂(N)→H
 L₃(1)→I
 L₃(N)→L
+abs(L₂(2)-L₂(1))/O<2→V
+abs(L₂(N)-L₂(N-1))/O<2→θ
 0→M
-If F>0:10^L₁(F)→M
+0→Z
+0→F
+If V and θ:Then
+If H>G:0→V
+If H≤G:0→θ
+End
+If V or θ:Then
+If V:Then
+G→W
+Else
+H→W
+End
+seq(K*(abs(L₂(K)-W)>3),K,1,N)→L₅
+If V:Then
+min(L₅+10^9*(L₅=0))→F
+If F>N:0→F
+F-1→P
+F→Q
+Else
+max(L₅)→F
+F→P
+F+1→Q
+End
+If F>0:Then
+W+3-6(L₂(F)<W)→R
+L₁(P)+(R-L₂(P))/(L₂(Q)-L₂(P))*(L₁(Q)-L₁(P))→E
+10^E→M
+End
+Else
+max(L₂)→W
+W-3→R
+seq(K*(L₂(K)≥R),K,1,N)→L₅
+min(L₅+10^9*(L₅=0))→F
+max(L₅)→Z
+If F>1:Then
+L₁(F-1)+(R-L₂(F-1))/(L₂(F)-L₂(F-1))*(L₁(F)-L₁(F-1))→E
+10^E→M
+End
+If Z<N:Then
+L₁(Z)+(R-L₂(Z))/(L₂(Z+1)-L₂(Z))*(L₁(Z+1)-L₁(Z))→θ
+10^θ→Z
+Else
+0→Z
+End
+End
 For(J,1,2)
 If J=2:Then
 L₃→L₂
@@ -262,7 +305,7 @@ For(K,0-int(0-Xmin),int(Xmax))
 Vertical K,22
 Text(140,max(0,min(225,int((K-Xmin)/(Xmax-Xmin)*265)-10)),"10^",K)
 End
-If J=1:Horizontal L₂(1)-3,15
+If J=1 and M+Z>0:Horizontal R,15
 For(K,1,N-1)
 Line(L₁(K),L₂(K),L₁(K+1),L₂(K+1))
 End
@@ -271,10 +314,14 @@ If J=1:Text(2,2,"MAG DB")
 If J=2:Text(2,2,"PHASE DEG")
 Text(14,2,"MAX=",round(max(L₂),2))
 Text(26,2,"MIN=",round(min(L₂),2))
-If F>0:Then
-Vertical L₁(F),13
 TextColor(13)
+If M>0:Then
+Vertical E,13
 Text(38,2,"F3DB=",round(M,2))
+End
+If Z>0:Then
+Vertical θ,13
+Text(50,2,"F3DB2=",round(Z,2))
 End
 Pause 
 End
@@ -283,6 +330,8 @@ TextColor(12)
 ClrHome
 Disp "DB START,END",round(G,2),round(H,2)
 Disp "DEG START,END",round(I,2),round(L,2)
+Disp "REF DB",round(W,2)
 Sci
 Disp "F3DB HZ",M
+If Z>0:Disp "F3DB2 HZ",Z
 Normal

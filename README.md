@@ -75,7 +75,7 @@ The calculator asks for one value per line. For ZIN enter `10K`, then `0` for th
 | Quantity | Expected | Program |
 |---|---|---|
 | Low-frequency gain | −R2/R1 = −10 (20 dB) | 20 dB |
-| fc = 1/(2π R2 C2) | 15.92 Hz | F3DB = 15.92 |
+| fc = 1/(2π R2 C2) | 15.92 Hz | F3DB ≈ 15.88 |
 | Phase | 180° → 90° | 179.43° → 90.06° |
 
 Magnitude plot on the calculator (grey vertical lines: decades, orange: −3 dB level, purple: F3DB):
@@ -105,7 +105,7 @@ The same Bode plot rendered on a PC with the same equations, for reference (not 
 | 项目 | 理论值 | 程序结果 |
 |---|---|---|
 | 低频增益 | −R2/R1 = −10(20 dB) | 20 dB |
-| fc = 1/(2π R2 C2) | 15.92 Hz | F3DB = 15.92 |
+| fc = 1/(2π R2 C2) | 15.92 Hz | F3DB ≈ 15.88 |
 | 相位 | 180° → 90° | 179.43° → 90.06° |
 
 计算器上的幅频曲线(灰色竖线:十倍频,橙色线:−3 dB 位置,紫色:F3DB):
@@ -128,7 +128,7 @@ The same Bode plot rendered on a PC with the same equations, for reference (not 
 
 ## Notes and limits
 
-- `F3DB` is only meaningful when the response is flat and then drops/rises by 3 dB. For monotonically falling/rising responses or notch/resonance circuits it is just the first point 3 dB away from the start value.
+- `F3DB` (V29) is measured from the response's **flat plateau** (shown as `REF DB`), not from the plot's start point. If an end of the plot is flat (slope < 2 dB/decade), F3DB is where the curve is 3 dB away from that plateau — e.g. for a shelving high-pass whose low-frequency gain rises without limit, it is the +3 dB point above the high-frequency gain, i.e. the zero frequency. If neither end is flat (band-pass/resonance), the reference is the peak and both −3 dB edges are shown (`F3DB`, `F3DB2`). The frequency is linearly interpolated between plot points (≈0.3% accuracy). Before V29, F3DB was taken relative to the first plotted point, so it depended on the chosen start frequency and was meaningless for responses that are not flat at low frequency.
 - Corner frequencies up to 10^15 Hz are detected for the auto range (V25; earlier versions stopped at 1 GHz).
 - The summary page shows F3DB in scientific notation (e.g. `1.633911375E9`), temporarily switching to Sci mode (V27).
 - The plot turns off all `Y=` functions (`FnOff`, V28), so a leftover equation on the calculator will not draw an extra line.
@@ -139,7 +139,7 @@ The same Bode plot rendered on a PC with the same equations, for reference (not 
 
 ## 注意事项与限制
 
-- `F3DB` 只有在曲线先平坦、再下降/上升 3 dB 时才有意义。对于单调下降/上升的响应,或陷波/谐振电路,它只是第一个与起点相差 3 dB 的点。
+- `F3DB`(V29)以曲线的**平坦段**为参考(显示为 `REF DB`),而不是以画图起点为参考。如果曲线某一端是平的(斜率 < 2 dB/十倍频),F3DB 就是与该平坦段相差 3 dB 的频率——例如低频增益无限上升的搁架式高通,F3DB 是比高频增益高 3 dB 的点,也就是零点频率。如果两端都不平(带通/谐振),则以峰值为参考,并显示两个 −3 dB 边界(`F3DB`、`F3DB2`)。频率在相邻采样点之间线性插值(误差约 0.3%)。V29 之前 F3DB 以第一个采样点为参考,结果取决于起始频率,对低频不平坦的响应没有意义。
 - 自动范围可检测到 10^15 Hz 以内的转折频率(V25;之前的版本只到 1 GHz)。
 - 汇总页的 F3DB 用科学计数法显示(例如 `1.633911375E9`),显示时临时切到 Sci 模式,之后恢复 Normal(V27)。
 - 画图前会关闭所有 `Y=` 函数(`FnOff`,V28),计算器里残留的函数不会在图上多画一条线。
