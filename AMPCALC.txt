@@ -58,7 +58,7 @@ Goto EN
 Lbl EN
 For(X,V,V+R-1)
 ClrHome
-Disp "AMPCALC V30"
+Disp "AMPCALC V31"
 Disp sub(Str3,9*(X-1)+1,9)
 Disp "E.G. 10K 1UF 1NH","0 IF ABSENT"
 Input "",Str1
@@ -317,11 +317,15 @@ Text(26,2,"MIN=",round(min(L₂),2))
 TextColor(13)
 If M>0:Then
 Vertical E,13
-Text(38,2,"F3DB=",round(M,2))
+Sci
+Text(38,2,"F3DB=",M)
+Normal
 End
 If Z>0:Then
 Vertical θ,13
-Text(50,2,"F3DB2=",round(Z,2))
+Sci
+Text(50,2,"F3DB2=",Z)
+Normal
 End
 Pause 
 End
