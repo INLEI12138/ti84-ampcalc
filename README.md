@@ -33,7 +33,7 @@ A TI-BASIC program that computes the gain, dB and phase of an **inverting** or *
 ## Install
 
 1. Send `AMPCALC.8xp` to the calculator with TI Connect CE (or copy `AMPCALC.txt` into a new program in the TI Connect CE editor and send that).
-2. Set **MODE** to `Degree` and `a+bi` (the program sets Degree itself; `a+bi` must be set manually).
+2. No MODE setup needed: the program sets Degree itself and works in both `REAL` and `a+bi` mode (since V30 it builds j from the constant `i`, so a RAM reset no longer causes `ERR: NONREAL ANSWERS`).
 3. `PRGM` → `AMPCALC` → `ENTER`. (The first two menus have a QUIT option, so you can always exit.)
 
 > TI Connect CE tip: if the transfer fails with "Calculator is Busy", exit the running program to the home screen first.
@@ -41,7 +41,7 @@ A TI-BASIC program that computes the gain, dB and phase of an **inverting** or *
 ## 安装
 
 1. 用 TI Connect CE 把 `AMPCALC.8xp` 发送到计算器(或者把 `AMPCALC.txt` 的内容复制到 TI Connect CE 编辑器里新建的程序中,再发送)。
-2. 把 **MODE** 设为 `Degree` 和 `a+bi`(程序自己会设置 Degree,但 `a+bi` 需要手动设置)。
+2. 不需要设置 MODE：程序自己会切到 Degree，在 `REAL` 和 `a+bi` 模式下都能运行（新版用常数 `i` 表示 j，计算器 RAM 清空后不会再出现 `ERR: NONREAL ANSWERS`）。
 3. 按 `PRGM` → 选 `AMPCALC` → `ENTER`。(开头的选择菜单和 SETUP 菜单都有 QUIT 选项,随时可以退出。)
 
 > TI Connect CE 小提示:如果发送时提示 "Calculator is Busy",请先在计算器上退出正在运行的程序,回到主屏幕再发送。

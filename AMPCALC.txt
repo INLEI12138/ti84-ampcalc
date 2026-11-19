@@ -58,7 +58,7 @@ Goto EN
 Lbl EN
 For(X,V,V+R-1)
 ClrHome
-Disp "AMPCALC V29"
+Disp "AMPCALC V30"
 Disp sub(Str3,9*(X-1)+1,9)
 Disp "E.G. 10K 1UF 1NH","0 IF ABSENT"
 Input "",Str1
@@ -123,7 +123,7 @@ End
 Pause 
 Goto C
 Lbl GO
-√(0-1)→Y
+i→Y
 Menu("MODE","SINGLE FREQ",S,"BODE PLOT",P,"BACK",C)
 Lbl S
 Input "FREQ HZ:",S
